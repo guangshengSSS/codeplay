@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.icbc.yang.mapper.LoginMessageMapper">
+
+    <!--定义接口方法对应的 SQL 语句-->
+    <!-- 根据用户id查询用户
+        1.id必须和Mapper接口方法名一致
+        2.parameterType必须和接口方法参数一致
+        3.resultType必须和接口方法返回值类型一致
+        4.#{} 括号中的值为pojo属性名称。
+     -->
+    <select id="findLoginer" parameterType="String" resultType="cn.icbc.yang.pojo.LoginMessage">
+        select * from t_login_message where username=#{name}
+    </select>
+
+
+    <!-- 通用查询映射结果 -->
+    <!-- 定义主键 ,非常重要。如果是多个字段,则定义多个id -->
+    <!-- property：主键在pojo中的属性名 -->
+    <!-- column：主键在数据库中的列名 -->
+    <resultMap id="BaseResultMap" type="cn.icbc.yang.pojo.LoginMessage">
+        <id column="Usernamenumber" property="Usernamenumber" />
+        <result column="Username" property="Username" />
+        <result column="Emalenumber" property="Emalenumber" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        Usernamenumber, Username, Emalenumber
+    </sql>
+
+</mapper>
