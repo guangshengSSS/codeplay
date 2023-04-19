@@ -14,7 +14,16 @@
         insert into t_teacher_message values (#{TeacherID},#{Name},#{Sex},#{Subject},#{EnterTime})
     </insert>
 
-    <!-- 通用查询映射结果 -->
+    <select id="findallstudentbelongone" parameterType="String" resultType="cn.icbc.yang.pojo.StudentMessage">
+        SELECT t_student_message.Studentid, t_student_message.Name,t_student_message.sex,t_student_message.school,t_student_message.grade,t_student_message.studentclass,t_student_message.entertime,t_student_message.staytimeclass,t_student_message.Givenmoney
+        FROM t_student_message INNER JOIN t_student_teacher
+        ON t_student_message.Studentid =t_student_teacher.StudentID AND t_student_teacher.TeacherID="1"
+    </select>
+
+
+
+    <!-- property对应的实体类里面的，column对应的数据库里面-->
+    <!-- 教师表 -->
     <resultMap id="BaseResultMap" type="cn.icbc.yang.pojo.TeacherMessage">
         <id column="TeacherID" property="TeacherID" />
         <result column="Name" property="Name" />
@@ -28,6 +37,36 @@
         TeacherID, Name, Sex, Subject, EnterTime
     </sql>
 
+    <!-- 教师学生对应表 -->
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap1" type="cn.icbc.yang.pojo.StudentTeacherMessage">
+        <id column="connectionID" property="connectionID" />
+        <result column="StudentID" property="StudentID" />
+        <result column="TeacherID" property="TeacherID" />
+    </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List1">
+        connectionID, StudentID, TeacherID
+    </sql>
+
+    <!-- 学生表 -->
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap2" type="cn.icbc.yang.pojo.StudentMessage">
+        <id column="Studentid" property="Studentid" />
+        <result column="Name" property="Name" />
+        <result column="Sex" property="Sex" />
+        <result column="School" property="School" />
+        <result column="Grade" property="Grade" />
+        <result column="Studentclass" property="Studentclass" />
+        <result column="Entertime" property="Entertime" />
+        <result column="Staytimeclass" property="Staytimeclass" />
+        <result column="Givenmoney" property="Givenmoney" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List2">
+        Studentid, Name, Sex, School, Grade, Studentclass, Entertime, Staytimeclass, Givenmoney
+    </sql>
 
 </mapper>

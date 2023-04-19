@@ -2,6 +2,7 @@ package cn.icbc.yang.controller;
 
 
 import cn.icbc.yang.mapper.TeacherMessageMapper;
+import cn.icbc.yang.pojo.StudentMessage;
 import cn.icbc.yang.pojo.TeacherMessage;
 import cn.icbc.yang.service.TeacherService;
 import cn.icbc.yang.vo.TeacherVoGet;
@@ -40,14 +41,14 @@ public class TeacherMessageController {
     @Autowired
     private TeacherService teacherService;
 
-    @PostMapping("/AddTeacher")
+    @PostMapping("/AddTeacher")//新增教师
     public String addteacher(@RequestBody TeacherVoGet teacher)
     {
         String result=teacherService.addteacher(teacher);//将前端数据传入service层执行业务逻辑
         return result;
     }
 
-    @PostMapping("/DeleteTeacher")
+    @PostMapping("/DeleteTeacher")//删除教师
     public String deleteTeacher(@RequestBody TeacherVoGet teacher)
     {
         TeacherMessage teacher2=teacherService.TeacherVoGetChangeTeacherMessage(teacher);
@@ -56,5 +57,12 @@ public class TeacherMessageController {
             return "successful";
         else
             return "unsuccessful";
+    }
+
+    @PostMapping("/FindAllStudents")//根据教师id查阅他教的所有学生
+    public  List<StudentMessage> findAllStudent(@RequestBody String teacherid)
+    {
+        List<StudentMessage> result=teacherService.findAllStudentBelongOneTeacher(teacherid);
+        return result;
     }
 }

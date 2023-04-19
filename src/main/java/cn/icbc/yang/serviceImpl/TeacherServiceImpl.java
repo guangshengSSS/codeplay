@@ -1,12 +1,15 @@
 package cn.icbc.yang.serviceImpl;
 
 import cn.icbc.yang.mapper.TeacherMessageMapper;
+import cn.icbc.yang.pojo.StudentMessage;
 import cn.icbc.yang.pojo.TeacherMessage;
 import cn.icbc.yang.service.TeacherService;
 import cn.icbc.yang.vo.TeacherVoGet;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {//所有service层业务函数的业务逻辑
@@ -46,4 +49,12 @@ public class TeacherServiceImpl implements TeacherService {//所有service层业
         //传出数据层对象供他人使用
         return teacher2;
     }
+
+    @Override
+    public List<StudentMessage> findAllStudentBelongOneTeacher(String teacherid)
+    {
+        List<StudentMessage> result= teacherMessageMapper.findallstudentbelongone(teacherid);
+        return result;
+    }
+
 }
