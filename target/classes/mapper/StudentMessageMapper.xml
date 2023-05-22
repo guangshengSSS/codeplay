@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.icbc.yang.mapper.StudentMassageMapper">
+
+    <select id="selectStudentMAXID" resultType="String">
+        select max(Studentid) from t_student_message
+    </select>
+
+    <!-- 学生表 -->
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.icbc.yang.pojo.StudentMessage">
+        <id column="Studentid" property="Studentid" />
+        <result column="Name" property="Name" />
+        <result column="Sex" property="Sex" />
+        <result column="School" property="School" />
+        <result column="Grade" property="Grade" />
+        <result column="Studentclass" property="Studentclass" />
+        <result column="Entertime" property="Entertime" />
+        <result column="Staytimeclass" property="Staytimeclass" />
+        <result column="Givenmoney" property="Givenmoney" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List2">
+        Studentid, Name, Sex, School, Grade, Studentclass, Entertime, Staytimeclass, Givenmoney
+    </sql>
+
+</mapper>
