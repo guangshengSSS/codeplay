@@ -1,8 +1,9 @@
 package cn.icbc.yang.controller;
 
-import cn.icbc.yang.mapper.StudentMassageMapper;
 import cn.icbc.yang.pojo.StudentMessage;
+import cn.icbc.yang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,51 +13,32 @@ import java.util.List;
 public class StudentMessageController {
 
     @Autowired
-    private StudentMassageMapper studentMassageMapper;//填充一个数据库对象
+    private StudentService studentService;
 
     /*新增操作，用plus，需要前端传一个 student */
     /* 请求方式：@RequestMapping(value="/{id}"),method=RequestMethod.POST)*/
     @PostMapping("/StudentMessage/AddStudent")
     public String AddStudent(@RequestBody StudentMessage student)
     {
-        List<StudentMessage> list= studentMassageMapper.selectList(null);
-        int max=0;
-        for (StudentMessage student1 : list)
-            if(Integer.parseInt(student1.getStudentid())>max)
-                max=Integer.parseInt(student1.getStudentid());
-
-        student.setStudentid(Integer.toString(max+1));
-        String change=student.getEntertime();
-        String[] change2=change.split("T");
-        student.setEntertime(change2[0]);
-
-        int i =  studentMassageMapper.insert(student);
-        if (i>0)
-            return "插入成功";
-        else
-            return "插入失败";
+        String result=studentService.InsertNewStudent(student);
+        return result;
     }
 
     //删除操作,需要前端传一个id
     @PostMapping("/StudentMessage/DeleteStudent")
     public String deleteStudent(@RequestBody StudentMessage student)//id是前端的参数名，post传参的参数名也必须是id，不能是数据库名 Studentid
     {
-        int i = studentMassageMapper.delete(student.getStudentid());
-        if (i>0)
-            return "删除成功";
-        else
-            return "删除失败";
+        String result=studentService.deleteOldStudent(student);
+        return result;
+
     }
 
     //修改操作，需要前端传一个 student 对象
     @PostMapping(value="/StudentMessage/updateStudent")
     public String updateStudent(StudentMessage student)
     {
-        int i = studentMassageMapper.update(student);
-        if (i>0)
-            return "修改成功";
-        else
-            return "修改失败";
+        String result=studentService.updateOldStudent(student);
+        return result;
     }
 
 
@@ -65,8 +47,8 @@ public class StudentMessageController {
     @RequestMapping("/StudentMessage/allStudent")
     public List<StudentMessage> findall()
     {
-        List<StudentMessage> list= studentMassageMapper.selectList(null);
-        return list;
+        List<StudentMessage> result=studentService.selectAllStudent();
+        return result;
     }
 
     /*查询操作，根据学生姓名查询，需要前端传一个 name 字段*/
@@ -74,8 +56,8 @@ public class StudentMessageController {
     @RequestMapping(value="/StudentMessage/findStudent")
     public List<StudentMessage> findStudent(String name)
     {
-        List<StudentMessage> list= studentMassageMapper.findName(name);
-        return list;
+        List<StudentMessage> result=studentService.findOldStudent(name);
+        return result;
     }
 }
 

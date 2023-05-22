@@ -1,0 +1,11 @@
+spring:
+  redis:
+    host: 190.168.150.101 #redis服务器所在ip
+    port: 6379 #端口地址
+    password: 53625230 #redis服务器连接密码
+    lettuce:
+      pool:
+        max-active: 8  #最大连接
+        max-idle: 8 #最大空闲连接
+        min-idle: 0 #最小空闲连接
+        max-wait: 100 #连接等待时间

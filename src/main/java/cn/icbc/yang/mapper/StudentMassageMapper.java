@@ -11,12 +11,12 @@ import java.util.List;
 
 @Mapper
 public interface StudentMassageMapper extends BaseMapper<StudentMessage> {
-    @Select("Select * from studentmessage where Name=#{name}")
+    @Select("Select * from t_student_message where Name=#{name}")
     public List<StudentMessage> findName(String name);
-    @Delete("delete from studentmessage where Studentid=#{id}")
+    @Delete("delete from t_student_message where Studentid=#{id}")
     public int delete(String id);
 
-    @Update("update studentmessage set Studentid=#{Studentid}," +
+    @Update("update t_student_message set Studentid=#{Studentid}," +
             "name={name}," +
             "Sex={Sex}," +
             "School={School}," +
@@ -26,5 +26,7 @@ public interface StudentMassageMapper extends BaseMapper<StudentMessage> {
             "StayTimeClass={Staytimeclass}," +
             "GivenMoney={Givenmoney where id=#{id}")
     int update(StudentMessage studentMessage);
+
+    public String selectStudentMAXID();
 }
 
